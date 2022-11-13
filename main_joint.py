@@ -6,6 +6,7 @@ import warnings
 from data_util.data_process import *
 from tqdm import tqdm, trange
 from data_util.Metrics import IntentMetrics, SlotMetrics,semantic_acc
+from data_util import config
 from model.joint_model_trans import Joint_model
 from model.Radam import RAdam
 

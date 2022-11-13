@@ -25,3 +25,7 @@ lr=0.001
 eps = 1e-12
 use_gpu=True
 
+# noise
+user_count = 10
+user_mean = 0.2
+user_std = 0.2
