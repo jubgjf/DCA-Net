@@ -1,0 +1,640 @@
+1. load config and dict
+超过最大长度的样本数量为： 15
+16
+超过最大长度的样本数量为： 3
+14
+[0.001]
+loss domain: 18.82982635498047
+epoch: 0|    step: 100 |    loss: 18.82982635498047
+
+Evaluation - intent_loss: 0.322670 slot_loss: 11.940008 acc: 0.7140% slot f1: 0.5467 sent acc: 0.1480 
+
+[0.001]
+loss domain: 6.676617622375488
+epoch: 1|    step: 100 |    loss: 6.676617622375488
+
+Evaluation - intent_loss: 0.308591 slot_loss: 5.747138 acc: 0.7140% slot f1: 0.7466 sent acc: 0.3460 
+
+[0.001]
+loss domain: 4.817429542541504
+epoch: 2|    step: 100 |    loss: 4.817429542541504
+
+Evaluation - intent_loss: 0.305614 slot_loss: 3.712270 acc: 0.7140% slot f1: 0.8229 sent acc: 0.4360 
+
+[0.001]
+loss domain: 3.47578763961792
+epoch: 3|    step: 100 |    loss: 3.47578763961792
+
+Evaluation - intent_loss: 0.304824 slot_loss: 2.578768 acc: 0.7140% slot f1: 0.8555 sent acc: 0.4940 
+
+[0.001]
+loss domain: 3.071375846862793
+epoch: 4|    step: 100 |    loss: 3.071375846862793
+
+Evaluation - intent_loss: 0.304104 slot_loss: 2.059045 acc: 0.7140% slot f1: 0.8695 sent acc: 0.5120 
+
+[0.001]
+loss domain: 2.33976674079895
+epoch: 5|    step: 100 |    loss: 2.33976674079895
+
+Evaluation - intent_loss: 0.303680 slot_loss: 1.580580 acc: 0.7140% slot f1: 0.8917 sent acc: 0.5340 
+
+[0.001]
+loss domain: 2.106928825378418
+epoch: 6|    step: 100 |    loss: 2.106928825378418
+
+Evaluation - intent_loss: 0.303485 slot_loss: 1.246248 acc: 0.7140% slot f1: 0.9162 sent acc: 0.5640 
+
+[0.001]
+loss domain: 1.6250405311584473
+epoch: 7|    step: 100 |    loss: 1.6250405311584473
+
+Evaluation - intent_loss: 0.302973 slot_loss: 1.060378 acc: 0.7140% slot f1: 0.9352 sent acc: 0.5920 
+
+[0.001]
+loss domain: 2.1414387226104736
+epoch: 8|    step: 100 |    loss: 2.1414387226104736
+
+Evaluation - intent_loss: 0.302758 slot_loss: 0.884359 acc: 0.7140% slot f1: 0.9470 sent acc: 0.6060 
+
+[0.001]
+loss domain: 1.6442512273788452
+epoch: 9|    step: 100 |    loss: 1.6442512273788452
+
+Evaluation - intent_loss: 0.302501 slot_loss: 0.809784 acc: 0.7140% slot f1: 0.9564 sent acc: 0.6140 
+
+[0.001]
+loss domain: 0.9187492728233337
+epoch: 10|    step: 100 |    loss: 0.9187492728233337
+
+Evaluation - intent_loss: 0.302326 slot_loss: 0.751562 acc: 0.7140% slot f1: 0.9622 sent acc: 0.6260 
+
+[0.001]
+loss domain: 1.075904130935669
+epoch: 11|    step: 100 |    loss: 1.075904130935669
+
+Evaluation - intent_loss: 0.301854 slot_loss: 0.716844 acc: 0.7140% slot f1: 0.9544 sent acc: 0.6220 
+
+[0.001]
+loss domain: 0.7619631290435791
+epoch: 12|    step: 100 |    loss: 0.7619631290435791
+
+Evaluation - intent_loss: 0.301650 slot_loss: 0.686223 acc: 0.7140% slot f1: 0.9612 sent acc: 0.6340 
+
+[0.001]
+loss domain: 0.793350100517273
+epoch: 13|    step: 100 |    loss: 0.793350100517273
+
+Evaluation - intent_loss: 0.301168 slot_loss: 0.637729 acc: 0.7140% slot f1: 0.9623 sent acc: 0.6340 
+
+[0.001]
+loss domain: 1.0590128898620605
+epoch: 14|    step: 100 |    loss: 1.0590128898620605
+
+Evaluation - intent_loss: 0.300765 slot_loss: 0.636062 acc: 0.7140% slot f1: 0.9671 sent acc: 0.6380 
+
+[0.001]
+loss domain: 0.7855388522148132
+epoch: 15|    step: 100 |    loss: 0.7855388522148132
+
+Evaluation - intent_loss: 0.276237 slot_loss: 0.549222 acc: 0.7400% slot f1: 0.9707 sent acc: 0.6700 
+
+[0.001]
+loss domain: 1.2568557262420654
+epoch: 16|    step: 100 |    loss: 1.2568557262420654
+
+Evaluation - intent_loss: 0.224376 slot_loss: 0.581022 acc: 0.7900% slot f1: 0.9707 sent acc: 0.7180 
+
+[0.001]
+loss domain: 0.9638855457305908
+epoch: 17|    step: 100 |    loss: 0.9638855457305908
+
+Evaluation - intent_loss: 0.220607 slot_loss: 0.581075 acc: 0.7940% slot f1: 0.9660 sent acc: 0.7160 
+
+[0.001]
+loss domain: 0.7721801996231079
+epoch: 18|    step: 100 |    loss: 0.7721801996231079
+
+Evaluation - intent_loss: 0.217308 slot_loss: 0.593363 acc: 0.7960% slot f1: 0.9708 sent acc: 0.7220 
+
+[0.001]
+loss domain: 1.032681941986084
+epoch: 19|    step: 100 |    loss: 1.032681941986084
+
+Evaluation - intent_loss: 0.216476 slot_loss: 0.587365 acc: 0.7960% slot f1: 0.9687 sent acc: 0.7200 
+
+[0.001]
+loss domain: 0.7284208536148071
+epoch: 20|    step: 100 |    loss: 0.7284208536148071
+
+Evaluation - intent_loss: 0.218008 slot_loss: 0.522695 acc: 0.7940% slot f1: 0.9704 sent acc: 0.7180 
+
+[0.001]
+loss domain: 0.6211382746696472
+epoch: 21|    step: 100 |    loss: 0.6211382746696472
+
+Evaluation - intent_loss: 0.218081 slot_loss: 0.522787 acc: 0.7940% slot f1: 0.9728 sent acc: 0.7260 
+
+[0.001]
+loss domain: 0.8873360753059387
+epoch: 22|    step: 100 |    loss: 0.8873360753059387
+
+Evaluation - intent_loss: 0.220693 slot_loss: 0.538547 acc: 0.7920% slot f1: 0.9718 sent acc: 0.7220 
+
+[0.001]
+loss domain: 0.5519733428955078
+epoch: 23|    step: 100 |    loss: 0.5519733428955078
+
+Evaluation - intent_loss: 0.216761 slot_loss: 0.634402 acc: 0.7960% slot f1: 0.9669 sent acc: 0.7160 
+
+[0.001]
+loss domain: 0.8014427423477173
+epoch: 24|    step: 100 |    loss: 0.8014427423477173
+
+Evaluation - intent_loss: 0.216782 slot_loss: 0.490368 acc: 0.7960% slot f1: 0.9743 sent acc: 0.7360 
+
+[0.001]
+loss domain: 0.4783276319503784
+epoch: 25|    step: 100 |    loss: 0.4783276319503784
+
+Evaluation - intent_loss: 0.217428 slot_loss: 0.568035 acc: 0.7940% slot f1: 0.9707 sent acc: 0.7240 
+
+[0.001]
+loss domain: 0.6918389797210693
+epoch: 26|    step: 100 |    loss: 0.6918389797210693
+
+Evaluation - intent_loss: 0.215290 slot_loss: 0.569438 acc: 0.7960% slot f1: 0.9739 sent acc: 0.7260 
+
+[0.001]
+loss domain: 0.6189121007919312
+epoch: 27|    step: 100 |    loss: 0.6189121007919312
+
+Evaluation - intent_loss: 0.193989 slot_loss: 0.586670 acc: 0.8220% slot f1: 0.9722 sent acc: 0.7480 
+
+[0.001]
+loss domain: 0.714990496635437
+epoch: 28|    step: 100 |    loss: 0.714990496635437
+
+Evaluation - intent_loss: 0.174918 slot_loss: 0.575335 acc: 0.8400% slot f1: 0.9742 sent acc: 0.7740 
+
+[0.001]
+loss domain: 1.0574523210525513
+epoch: 29|    step: 100 |    loss: 1.0574523210525513
+
+Evaluation - intent_loss: 0.164639 slot_loss: 0.595899 acc: 0.8460% slot f1: 0.9742 sent acc: 0.7900 
+
+[0.001]
+loss domain: 0.3904774487018585
+epoch: 30|    step: 100 |    loss: 0.3904774487018585
+
+Evaluation - intent_loss: 0.166566 slot_loss: 0.580152 acc: 0.8440% slot f1: 0.9721 sent acc: 0.7760 
+
+[0.001]
+loss domain: 0.35744282603263855
+epoch: 31|    step: 100 |    loss: 0.35744282603263855
+
+Evaluation - intent_loss: 0.156503 slot_loss: 0.576050 acc: 0.8540% slot f1: 0.9731 sent acc: 0.7840 
+
+[0.001]
+loss domain: 0.447573721408844
+epoch: 32|    step: 100 |    loss: 0.447573721408844
+
+Evaluation - intent_loss: 0.141412 slot_loss: 0.585015 acc: 0.8660% slot f1: 0.9687 sent acc: 0.8000 
+
+[0.001]
+loss domain: 0.4864835739135742
+epoch: 33|    step: 100 |    loss: 0.4864835739135742
+
+Evaluation - intent_loss: 0.132535 slot_loss: 0.522142 acc: 0.8800% slot f1: 0.9754 sent acc: 0.8080 
+
+[0.001]
+loss domain: 0.6267368793487549
+epoch: 34|    step: 100 |    loss: 0.6267368793487549
+
+Evaluation - intent_loss: 0.121367 slot_loss: 0.561668 acc: 0.8880% slot f1: 0.9751 sent acc: 0.8220 
+
+[0.001]
+loss domain: 0.3974197208881378
+epoch: 35|    step: 100 |    loss: 0.3974197208881378
+
+Evaluation - intent_loss: 0.115539 slot_loss: 0.547856 acc: 0.8940% slot f1: 0.9728 sent acc: 0.8220 
+
+[0.001]
+loss domain: 0.44152820110321045
+epoch: 36|    step: 100 |    loss: 0.44152820110321045
+
+Evaluation - intent_loss: 0.120783 slot_loss: 0.546290 acc: 0.8860% slot f1: 0.9754 sent acc: 0.8180 
+
+[0.001]
+loss domain: 0.3097382187843323
+epoch: 37|    step: 100 |    loss: 0.3097382187843323
+
+Evaluation - intent_loss: 0.116085 slot_loss: 0.695098 acc: 0.8900% slot f1: 0.9720 sent acc: 0.8200 
+
+[0.001]
+loss domain: 0.5250329971313477
+epoch: 38|    step: 100 |    loss: 0.5250329971313477
+
+Evaluation - intent_loss: 0.117433 slot_loss: 0.530622 acc: 0.8920% slot f1: 0.9748 sent acc: 0.8320 
+
+[0.001]
+loss domain: 0.5090429782867432
+epoch: 39|    step: 100 |    loss: 0.5090429782867432
+
+Evaluation - intent_loss: 0.117359 slot_loss: 0.522882 acc: 0.8900% slot f1: 0.9783 sent acc: 0.8320 
+
+[0.00025]
+loss domain: 0.1980208307504654
+epoch: 40|    step: 100 |    loss: 0.1980208307504654
+
+Evaluation - intent_loss: 0.114862 slot_loss: 0.501756 acc: 0.8940% slot f1: 0.9792 sent acc: 0.8400 
+
+[0.0005]
+loss domain: 0.3337216079235077
+epoch: 41|    step: 100 |    loss: 0.3337216079235077
+
+Evaluation - intent_loss: 0.108726 slot_loss: 0.518770 acc: 0.9000% slot f1: 0.9795 sent acc: 0.8440 
+
+[0.0005]
+loss domain: 0.4155277907848358
+epoch: 42|    step: 100 |    loss: 0.4155277907848358
+
+Evaluation - intent_loss: 0.109523 slot_loss: 0.498673 acc: 0.8980% slot f1: 0.9792 sent acc: 0.8460 
+
+[0.0005]
+loss domain: 0.34987983107566833
+epoch: 43|    step: 100 |    loss: 0.34987983107566833
+
+Evaluation - intent_loss: 0.110146 slot_loss: 0.512398 acc: 0.8960% slot f1: 0.9795 sent acc: 0.8440 
+
+[0.0005]
+loss domain: 0.18855461478233337
+epoch: 44|    step: 100 |    loss: 0.18855461478233337
+
+Evaluation - intent_loss: 0.111143 slot_loss: 0.508185 acc: 0.8960% slot f1: 0.9801 sent acc: 0.8440 
+
+[0.0005]
+loss domain: 0.18700730800628662
+epoch: 45|    step: 100 |    loss: 0.18700730800628662
+
+Evaluation - intent_loss: 0.107304 slot_loss: 0.513124 acc: 0.9000% slot f1: 0.9807 sent acc: 0.8460 
+
+[0.0005]
+loss domain: 0.364705353975296
+epoch: 46|    step: 100 |    loss: 0.364705353975296
+
+Evaluation - intent_loss: 0.108512 slot_loss: 0.514250 acc: 0.8980% slot f1: 0.9792 sent acc: 0.8440 
+
+[0.0005]
+loss domain: 0.37116074562072754
+epoch: 47|    step: 100 |    loss: 0.37116074562072754
+
+Evaluation - intent_loss: 0.102624 slot_loss: 0.495650 acc: 0.9060% slot f1: 0.9798 sent acc: 0.8540 
+
+[0.0005]
+loss domain: 0.40090158581733704
+epoch: 48|    step: 100 |    loss: 0.40090158581733704
+
+Evaluation - intent_loss: 0.105320 slot_loss: 0.508974 acc: 0.8980% slot f1: 0.9789 sent acc: 0.8440 
+
+[0.0005]
+loss domain: 0.2744683623313904
+epoch: 49|    step: 100 |    loss: 0.2744683623313904
+
+Evaluation - intent_loss: 0.100118 slot_loss: 0.507499 acc: 0.9080% slot f1: 0.9789 sent acc: 0.8560 
+
+[0.0005]
+loss domain: 0.3085840940475464
+epoch: 50|    step: 100 |    loss: 0.3085840940475464
+
+Evaluation - intent_loss: 0.093436 slot_loss: 0.525860 acc: 0.9140% slot f1: 0.9783 sent acc: 0.8560 
+
+[0.0005]
+loss domain: 0.31648966670036316
+epoch: 51|    step: 100 |    loss: 0.31648966670036316
+
+Evaluation - intent_loss: 0.093380 slot_loss: 0.532783 acc: 0.9140% slot f1: 0.9786 sent acc: 0.8560 
+
+[0.0005]
+loss domain: 0.39682915806770325
+epoch: 52|    step: 100 |    loss: 0.39682915806770325
+
+Evaluation - intent_loss: 0.089729 slot_loss: 0.538407 acc: 0.9160% slot f1: 0.9774 sent acc: 0.8580 
+
+[0.0005]
+loss domain: 0.34681710600852966
+epoch: 53|    step: 100 |    loss: 0.34681710600852966
+
+Evaluation - intent_loss: 0.089765 slot_loss: 0.519219 acc: 0.9180% slot f1: 0.9772 sent acc: 0.8580 
+
+[0.0005]
+loss domain: 0.2890394628047943
+epoch: 54|    step: 100 |    loss: 0.2890394628047943
+
+Evaluation - intent_loss: 0.086518 slot_loss: 0.529086 acc: 0.9200% slot f1: 0.9774 sent acc: 0.8600 
+
+[0.0005]
+loss domain: 0.2815488576889038
+epoch: 55|    step: 100 |    loss: 0.2815488576889038
+
+Evaluation - intent_loss: 0.087971 slot_loss: 0.526472 acc: 0.9180% slot f1: 0.9780 sent acc: 0.8580 
+
+[0.0005]
+loss domain: 0.2352660894393921
+epoch: 56|    step: 100 |    loss: 0.2352660894393921
+
+Evaluation - intent_loss: 0.089601 slot_loss: 0.533871 acc: 0.9160% slot f1: 0.9775 sent acc: 0.8540 
+
+[0.0005]
+loss domain: 0.31502586603164673
+epoch: 57|    step: 100 |    loss: 0.31502586603164673
+
+Evaluation - intent_loss: 0.096414 slot_loss: 0.523390 acc: 0.9080% slot f1: 0.9786 sent acc: 0.8480 
+
+[0.0005]
+loss domain: 0.365664005279541
+epoch: 58|    step: 100 |    loss: 0.365664005279541
+
+Evaluation - intent_loss: 0.088546 slot_loss: 0.531208 acc: 0.9160% slot f1: 0.9769 sent acc: 0.8500 
+
+[0.0005]
+loss domain: 0.27939993143081665
+epoch: 59|    step: 100 |    loss: 0.27939993143081665
+
+Evaluation - intent_loss: 0.092857 slot_loss: 0.508836 acc: 0.9140% slot f1: 0.9786 sent acc: 0.8520 
+
+[0.0005]
+loss domain: 0.34262514114379883
+epoch: 60|    step: 100 |    loss: 0.34262514114379883
+
+Evaluation - intent_loss: 0.089968 slot_loss: 0.506784 acc: 0.9180% slot f1: 0.9763 sent acc: 0.8520 
+
+[0.0005]
+loss domain: 0.21201170980930328
+epoch: 61|    step: 100 |    loss: 0.21201170980930328
+
+Evaluation - intent_loss: 0.084389 slot_loss: 0.515477 acc: 0.9220% slot f1: 0.9766 sent acc: 0.8540 
+
+[0.0005]
+loss domain: 0.24160081148147583
+epoch: 62|    step: 100 |    loss: 0.24160081148147583
+
+Evaluation - intent_loss: 0.084083 slot_loss: 0.513467 acc: 0.9220% slot f1: 0.9783 sent acc: 0.8600 
+
+[0.0005]
+loss domain: 0.2922663986682892
+epoch: 63|    step: 100 |    loss: 0.2922663986682892
+
+Evaluation - intent_loss: 0.090281 slot_loss: 0.523282 acc: 0.9180% slot f1: 0.9766 sent acc: 0.8520 
+
+[0.0005]
+loss domain: 0.20828334987163544
+epoch: 64|    step: 100 |    loss: 0.20828334987163544
+
+Evaluation - intent_loss: 0.088330 slot_loss: 0.526083 acc: 0.9180% slot f1: 0.9807 sent acc: 0.8600 
+
+[0.0005]
+loss domain: 0.21217525005340576
+epoch: 65|    step: 100 |    loss: 0.21217525005340576
+
+Evaluation - intent_loss: 0.088364 slot_loss: 0.528948 acc: 0.9180% slot f1: 0.9772 sent acc: 0.8500 
+
+[0.0005]
+loss domain: 0.2797231078147888
+epoch: 66|    step: 100 |    loss: 0.2797231078147888
+
+Evaluation - intent_loss: 0.089881 slot_loss: 0.486146 acc: 0.9140% slot f1: 0.9772 sent acc: 0.8460 
+
+[0.0005]
+loss domain: 0.2482534497976303
+epoch: 67|    step: 100 |    loss: 0.2482534497976303
+
+Evaluation - intent_loss: 0.086921 slot_loss: 0.527685 acc: 0.9160% slot f1: 0.9774 sent acc: 0.8500 
+
+[0.0005]
+loss domain: 0.2749839127063751
+epoch: 68|    step: 100 |    loss: 0.2749839127063751
+
+Evaluation - intent_loss: 0.086549 slot_loss: 0.527147 acc: 0.9200% slot f1: 0.9769 sent acc: 0.8500 
+
+[0.0005]
+loss domain: 0.21730732917785645
+epoch: 69|    step: 100 |    loss: 0.21730732917785645
+
+Evaluation - intent_loss: 0.084962 slot_loss: 0.500806 acc: 0.9200% slot f1: 0.9813 sent acc: 0.8660 
+
+[0.000125]
+loss domain: 0.2595740854740143
+epoch: 70|    step: 100 |    loss: 0.2595740854740143
+
+Evaluation - intent_loss: 0.085610 slot_loss: 0.532169 acc: 0.9220% slot f1: 0.9786 sent acc: 0.8600 
+
+[0.00025]
+loss domain: 0.2665133476257324
+epoch: 71|    step: 100 |    loss: 0.2665133476257324
+
+Evaluation - intent_loss: 0.087740 slot_loss: 0.534819 acc: 0.9160% slot f1: 0.9804 sent acc: 0.8620 
+
+[0.00025]
+loss domain: 0.31295356154441833
+epoch: 72|    step: 100 |    loss: 0.31295356154441833
+
+Evaluation - intent_loss: 0.088424 slot_loss: 0.545340 acc: 0.9140% slot f1: 0.9775 sent acc: 0.8480 
+
+[0.00025]
+loss domain: 0.3198907673358917
+epoch: 73|    step: 100 |    loss: 0.3198907673358917
+
+Evaluation - intent_loss: 0.085668 slot_loss: 0.560264 acc: 0.9220% slot f1: 0.9777 sent acc: 0.8580 
+
+[0.00025]
+loss domain: 0.37066376209259033
+epoch: 74|    step: 100 |    loss: 0.37066376209259033
+
+Evaluation - intent_loss: 0.084851 slot_loss: 0.545788 acc: 0.9200% slot f1: 0.9769 sent acc: 0.8500 
+
+[0.00025]
+loss domain: 0.2081156075000763
+epoch: 75|    step: 100 |    loss: 0.2081156075000763
+
+Evaluation - intent_loss: 0.085861 slot_loss: 0.561041 acc: 0.9180% slot f1: 0.9781 sent acc: 0.8520 
+
+[0.00025]
+loss domain: 0.3122645318508148
+epoch: 76|    step: 100 |    loss: 0.3122645318508148
+
+Evaluation - intent_loss: 0.084557 slot_loss: 0.551269 acc: 0.9200% slot f1: 0.9766 sent acc: 0.8540 
+
+[0.00025]
+loss domain: 0.26214441657066345
+epoch: 77|    step: 100 |    loss: 0.26214441657066345
+
+Evaluation - intent_loss: 0.085427 slot_loss: 0.537913 acc: 0.9200% slot f1: 0.9778 sent acc: 0.8560 
+
+[0.00025]
+loss domain: 0.2400306910276413
+epoch: 78|    step: 100 |    loss: 0.2400306910276413
+
+Evaluation - intent_loss: 0.085839 slot_loss: 0.535125 acc: 0.9160% slot f1: 0.9780 sent acc: 0.8520 
+
+[0.00025]
+loss domain: 0.26050853729248047
+epoch: 79|    step: 100 |    loss: 0.26050853729248047
+
+Evaluation - intent_loss: 0.078073 slot_loss: 0.525269 acc: 0.9260% slot f1: 0.9801 sent acc: 0.8680 
+
+[0.00025]
+loss domain: 0.20713217556476593
+epoch: 80|    step: 100 |    loss: 0.20713217556476593
+
+Evaluation - intent_loss: 0.077289 slot_loss: 0.549752 acc: 0.9300% slot f1: 0.9786 sent acc: 0.8680 
+
+[0.00025]
+loss domain: 0.25981274247169495
+epoch: 81|    step: 100 |    loss: 0.25981274247169495
+
+Evaluation - intent_loss: 0.076813 slot_loss: 0.554147 acc: 0.9300% slot f1: 0.9769 sent acc: 0.8660 
+
+[0.00025]
+loss domain: 0.3128359913825989
+epoch: 82|    step: 100 |    loss: 0.3128359913825989
+
+Evaluation - intent_loss: 0.076507 slot_loss: 0.586962 acc: 0.9280% slot f1: 0.9763 sent acc: 0.8640 
+
+[0.00025]
+loss domain: 0.26253190636634827
+epoch: 83|    step: 100 |    loss: 0.26253190636634827
+
+Evaluation - intent_loss: 0.075660 slot_loss: 0.561659 acc: 0.9280% slot f1: 0.9792 sent acc: 0.8680 
+
+[0.00025]
+loss domain: 0.28872981667518616
+epoch: 84|    step: 100 |    loss: 0.28872981667518616
+
+Evaluation - intent_loss: 0.075932 slot_loss: 0.574323 acc: 0.9300% slot f1: 0.9775 sent acc: 0.8660 
+
+[0.00025]
+loss domain: 0.2658690810203552
+epoch: 85|    step: 100 |    loss: 0.2658690810203552
+
+Evaluation - intent_loss: 0.076019 slot_loss: 0.551510 acc: 0.9280% slot f1: 0.9789 sent acc: 0.8660 
+
+[0.00025]
+loss domain: 0.26457497477531433
+epoch: 86|    step: 100 |    loss: 0.26457497477531433
+
+Evaluation - intent_loss: 0.078768 slot_loss: 0.556589 acc: 0.9260% slot f1: 0.9792 sent acc: 0.8600 
+
+[0.00025]
+loss domain: 0.26120567321777344
+epoch: 87|    step: 100 |    loss: 0.26120567321777344
+
+Evaluation - intent_loss: 0.075218 slot_loss: 0.542789 acc: 0.9280% slot f1: 0.9795 sent acc: 0.8600 
+
+[0.00025]
+loss domain: 0.26105794310569763
+epoch: 88|    step: 100 |    loss: 0.26105794310569763
+
+Evaluation - intent_loss: 0.071542 slot_loss: 0.576917 acc: 0.9340% slot f1: 0.9772 sent acc: 0.8620 
+
+[0.00025]
+loss domain: 0.18195290863513947
+epoch: 89|    step: 100 |    loss: 0.18195290863513947
+
+Evaluation - intent_loss: 0.071807 slot_loss: 0.570619 acc: 0.9340% slot f1: 0.9772 sent acc: 0.8720 
+
+[0.00025]
+loss domain: 0.3112230598926544
+epoch: 90|    step: 100 |    loss: 0.3112230598926544
+
+Evaluation - intent_loss: 0.073693 slot_loss: 0.577589 acc: 0.9300% slot f1: 0.9769 sent acc: 0.8640 
+
+[0.00025]
+loss domain: 0.24534593522548676
+epoch: 91|    step: 100 |    loss: 0.24534593522548676
+
+Evaluation - intent_loss: 0.073403 slot_loss: 0.586196 acc: 0.9320% slot f1: 0.9757 sent acc: 0.8680 
+
+[0.00025]
+loss domain: 0.21407897770404816
+epoch: 92|    step: 100 |    loss: 0.21407897770404816
+
+Evaluation - intent_loss: 0.077502 slot_loss: 0.624787 acc: 0.9260% slot f1: 0.9778 sent acc: 0.8620 
+
+[0.00025]
+loss domain: 0.2888590693473816
+epoch: 93|    step: 100 |    loss: 0.2888590693473816
+
+Evaluation - intent_loss: 0.079108 slot_loss: 0.625226 acc: 0.9240% slot f1: 0.9769 sent acc: 0.8600 
+
+[0.00025]
+loss domain: 0.31545311212539673
+epoch: 94|    step: 100 |    loss: 0.31545311212539673
+
+Evaluation - intent_loss: 0.073500 slot_loss: 0.618948 acc: 0.9320% slot f1: 0.9789 sent acc: 0.8740 
+
+[0.00025]
+loss domain: 0.2579529285430908
+epoch: 95|    step: 100 |    loss: 0.2579529285430908
+
+Evaluation - intent_loss: 0.075936 slot_loss: 0.602307 acc: 0.9300% slot f1: 0.9783 sent acc: 0.8660 
+
+[0.00025]
+loss domain: 0.3191869556903839
+epoch: 96|    step: 100 |    loss: 0.3191869556903839
+
+Evaluation - intent_loss: 0.073935 slot_loss: 0.578138 acc: 0.9300% slot f1: 0.9783 sent acc: 0.8700 
+
+[0.00025]
+loss domain: 0.3371778726577759
+epoch: 97|    step: 100 |    loss: 0.3371778726577759
+
+Evaluation - intent_loss: 0.073840 slot_loss: 0.573264 acc: 0.9340% slot f1: 0.9781 sent acc: 0.8700 
+
+[0.00025]
+loss domain: 0.3662416636943817
+epoch: 98|    step: 100 |    loss: 0.3662416636943817
+
+Evaluation - intent_loss: 0.073666 slot_loss: 0.617049 acc: 0.9300% slot f1: 0.9769 sent acc: 0.8660 
+
+[0.00025]
+loss domain: 0.23722466826438904
+epoch: 99|    step: 100 |    loss: 0.23722466826438904
+
+Evaluation - intent_loss: 0.073021 slot_loss: 0.580976 acc: 0.9340% slot f1: 0.9792 sent acc: 0.8800 
+
+best_slot_f1: [0.866, 0.9812536613942591, 0.92, 69]
+best_intent_acc: [0.862, 0.9771796372147455, 0.934, 88]
+best_sent_acc: [0.88, 0.9791727779407451, 0.934, 99]
+超过最大长度的样本数量为： 0
+14
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        33
+           1       0.41      1.00      0.58         9
+           3       0.94      1.00      0.97        48
+           4       0.00      0.00      0.00         1
+           6       0.93      1.00      0.96        38
+           8       0.00      0.00      0.00        18
+           9       1.00      0.48      0.65        21
+          11       0.45      0.83      0.59         6
+          12       0.00      0.00      0.00         2
+          13       0.00      0.00      0.00        10
+          14       0.94      1.00      0.97       632
+          15       0.00      0.00      0.00        12
+          16       0.00      0.00      0.00         1
+          17       0.00      0.00      0.00         8
+          18       0.00      0.00      0.00         1
+          19       0.00      0.00      0.00         1
+          20       0.00      0.00      0.00         7
+          21       0.65      1.00      0.79        36
+          23       0.00      0.00      0.00         6
+          24       0.00      0.00      0.00         3
+
+    accuracy                           0.91       893
+   macro avg       0.32      0.37      0.33       893
+weighted avg       0.85      0.91      0.87       893
+
+
+Evaluation -  acc: 0.9071% slot f1: 0.9567 sent_acc: 0.8275  
+

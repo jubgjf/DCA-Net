@@ -3,9 +3,9 @@ import torch
 import math
 import torch.nn as nn
 import torch.nn.functional as F
+import model.loss
 from model.torch_crf import CRF
 from layers.dynamic_rnn import DynamicLSTM
-import time
 from data_util import config
 
 
@@ -30,7 +30,10 @@ class Joint_model(nn.Module):
         self.T_block2 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
         self.T_block3 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
         self.crflayer = CRF(self.n_tag)
-        self.criterion = nn.CrossEntropyLoss()
+        # self.criterion = model.loss.SCELoss(alpha=0.1, beta=1.0, num_classes=n_class)
+        # self.criterion = model.loss.NCEandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
+        # self.criterion = model.loss.NCEandMAE(alpha=1.0, beta=1.0, num_classes=n_class)
+        self.criterion = model.loss.NFLandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
 
     def forward_logit(self, x, mask):
         x, x_char = x
