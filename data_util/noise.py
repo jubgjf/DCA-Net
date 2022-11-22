@@ -1,7 +1,7 @@
 import config
 import random
 
-random.seed(8)
+random.seed(config.seed)
 
 if __name__ == '__main__':
     labels: list
