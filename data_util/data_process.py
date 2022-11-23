@@ -6,7 +6,7 @@ import jieba
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 import torch
-from data_util import config
+from data_util.config import config
 
 
 class InputFeatures(object):

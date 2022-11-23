@@ -3,13 +3,16 @@ import os
 import random
 import warnings
 
-from data_util.data_process import *
-from tqdm import tqdm, trange
-from data_util.Metrics import IntentMetrics, SlotMetrics,semantic_acc
-from data_util import config
-from model.joint_model_trans import Joint_model
-from model.Radam import RAdam
+from tqdm import trange
 
+from data_util.Metrics import IntentMetrics, SlotMetrics, semantic_acc
+from data_util.data_process import *
+from data_util.noise import make_noise
+from model.Radam import RAdam
+from model.joint_model_trans import Joint_model
+
+config.parse_cli()
+config.dump()
 
 warnings.filterwarnings('ignore')
 if config.use_gpu and torch.cuda.is_available():
@@ -29,7 +32,6 @@ def set_seed():
 
 
 def dev(model, dev_loader, idx2slot):
-
     model.eval()
     eval_loss_intent = 0
     eval_loss_slot = 0
@@ -80,7 +82,6 @@ def dev(model, dev_loader, idx2slot):
 
 
 def run_train(train_data_file, dev_data_file):
-
     print("1. load config and dict")
     vocab_file = open(config.data_path + "vocab.txt", "r", encoding="utf-8")
     vocab_list = [word.strip() for word in vocab_file]
@@ -107,7 +108,8 @@ def run_train(train_data_file, dev_data_file):
                                vocab=vocab, is_train=True)
     dev_loader = read_corpus(dev_dir, max_length=config.max_len, intent2idx=intent2idx, slot2idx=slot2idx,
                              vocab=vocab, is_train=False)
-    model = Joint_model(config, config.hidden_dim, config.batch_size, config.max_len, n_intent_class, n_slot_tag, embedding_word)
+    model = Joint_model(config, config.hidden_dim, config.batch_size, config.max_len, n_intent_class, n_slot_tag,
+                        embedding_word)
 
     if use_cuda:
         model.cuda()
@@ -144,7 +146,7 @@ def run_train(train_data_file, dev_data_file):
 
         intent_acc, slot_f1, sent_acc = dev(model, dev_loader, idx2slot)
 
-        if slot_f1 > best_slot_f1[1] :
+        if slot_f1 > best_slot_f1[1]:
             best_slot_f1 = [sent_acc, slot_f1, intent_acc, epoch]
             torch.save(model, config.model_save_dir + config.model_path)
         if intent_acc > best_intent_acc[2]:
@@ -212,8 +214,11 @@ if __name__ == "__main__":
     train_file = "train.txt"
     dev_file = "dev.txt"
     test_file = "test.txt"
-    #trian model
+
     set_seed()
+    make_noise()
+
+    # train model
     run_train(train_file, dev_file)
-    #test model
+    # test model
     run_test(test_file)

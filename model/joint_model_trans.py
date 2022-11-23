@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import model.loss
 from model.torch_crf import CRF
 from layers.dynamic_rnn import DynamicLSTM
-from data_util import config
+from data_util.config import config
 
 
 class Joint_model(nn.Module):
@@ -18,7 +18,7 @@ class Joint_model(nn.Module):
         self.n_class = n_class
         self.n_tag = n_tag
         self.LayerNorm = LayerNorm(self.hidden_dim, eps=1e-12)
-        self.emb_drop = nn.Dropout(config.emb_dorpout)
+        self.emb_drop = nn.Dropout(config.emb_dropout)
         self.embed = nn.Embedding.from_pretrained(torch.tensor(embedding_matrix, dtype=torch.float), padding_idx=0)
         self.embed.weight.requires_grad = True
         self.biLSTM = DynamicLSTM(config.emb_dim, config.hidden_dim // 2, bidirectional=True, batch_first=True,
@@ -30,10 +30,11 @@ class Joint_model(nn.Module):
         self.T_block2 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
         self.T_block3 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
         self.crflayer = CRF(self.n_tag)
+        self.criterion = config.loss_fn
         # self.criterion = model.loss.SCELoss(alpha=0.1, beta=1.0, num_classes=n_class)
         # self.criterion = model.loss.NCEandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
         # self.criterion = model.loss.NCEandMAE(alpha=1.0, beta=1.0, num_classes=n_class)
-        self.criterion = model.loss.NFLandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
+        # self.criterion = model.loss.NFLandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
 
     def forward_logit(self, x, mask):
         x, x_char = x

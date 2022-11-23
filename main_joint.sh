@@ -2,19 +2,33 @@
 
 #SBATCH --mail-user=guanjiannan@outlook.com
 #SBATCH --mail-type=END
-#SBATCH -J DCA-Net                            # 作业名
-#SBATCH -o slurm_logs/slurm-%j.out            # stdout 重定向，%j 会替换成 jobid
-#SBATCH -e slurm_logs/slurm-%j.err            # stderr 重定向，%j 会替换成 jobid
-#SBATCH -p compute                            # 作业提交的分区
-#SBATCH -N 1                                  # 作业申请节点数量
-#SBATCH -t 8:00:00                            # 任务运行的最长时间
+#SBATCH -J DCA-Net
+#SBATCH -o slurm_logs/slurm-%j.out
+#SBATCH -e slurm_logs/slurm-%j.err
+#SBATCH -p compute
+#SBATCH -N 1
+#SBATCH -t 8:00:00
 #SBATCH --gres=gpu:tesla_p100-pcie-16gb:1
 
-# source ~/.bashrc
 source ~/.local/bin/miniconda3/etc/profile.d/conda.sh
-
-# 设置运行环境
 conda activate robust-slu
 
-# 输入要执行的命令，例如 ./hello 或 python test.py 等
-python main_joint.py
+python main_joint.py --loss ce --user_mean 0 --user_std 1
+python main_joint.py --loss ce
+python main_joint.py --loss nce
+python main_joint.py --loss sce
+python main_joint.py --loss rce
+python main_joint.py --loss nrce
+python main_joint.py --loss gce
+python main_joint.py --loss ngce
+python main_joint.py --loss mae
+python main_joint.py --loss nmae
+python main_joint.py --loss nce rce
+python main_joint.py --loss nce mae
+python main_joint.py --loss gce nce
+python main_joint.py --loss gce rce
+python main_joint.py --loss gce mae
+python main_joint.py --loss ngce nce
+python main_joint.py --loss ngce rce
+python main_joint.py --loss ngce mae
+python main_joint.py --loss mae rce
