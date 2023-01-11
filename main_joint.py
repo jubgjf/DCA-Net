@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import random
+import wandb
 import warnings
 
 from tqdm import trange
@@ -11,8 +12,11 @@ from data_util.noise import make_noise
 from model.Radam import RAdam
 from model.joint_model_trans import Joint_model
 
+wandb.init(project="robust-slu")
+
 config.parse_cli()
 config.dump()
+wandb.config.update(config.__dict__)
 
 warnings.filterwarnings('ignore')
 if config.use_gpu and torch.cuda.is_available():
@@ -145,6 +149,7 @@ def run_train(train_data_file, dev_data_file):
                 print('epoch: {}|    step: {} |    loss: {}'.format(epoch, step, loss.item()))
 
         intent_acc, slot_f1, sent_acc = dev(model, dev_loader, idx2slot)
+        wandb.log({'dev intent_acc': intent_acc, 'dev slot_f1': slot_f1, 'dev sent_acc': sent_acc})
 
         if slot_f1 > best_slot_f1[1]:
             best_slot_f1 = [sent_acc, slot_f1, intent_acc, epoch]
@@ -206,6 +211,7 @@ def run_test(test_data_file):
     intent_acc = Metrics_intent.accuracy
     sent_acc = semantic_acc(pred_slots, true_slots, pred_intents, true_intents)
     print('\nEvaluation -  acc: {:.4f}% ' 'slot f1: {:.4f} sent_acc: {:.4f}  \n'.format(intent_acc, slot_f1, sent_acc))
+    wandb.log({'test intent_acc': intent_acc, 'test slot_f1': slot_f1, 'test sent_acc': sent_acc})
 
     return sent_acc
 
