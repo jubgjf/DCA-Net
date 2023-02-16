@@ -1,8 +1,7 @@
-from data_util.config import config
 import random
 
 
-def make_noise():
+def make_noise(config):
     labels: list
     data: list
     lens: int

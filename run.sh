@@ -8,10 +8,9 @@
 #SBATCH -p compute
 #SBATCH -N 1
 #SBATCH -t 96:00:00
-#SBATCH --gres=gpu:tesla_p100-pcie-16gb:1
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
 
 source ~/.local/bin/miniconda3/etc/profile.d/conda.sh
-conda activate robust-slu
+conda activate hpc
 
-WANDB_MODE="offline"
-python run.py
+python main_joint.py

@@ -6,7 +6,6 @@ import jieba
 from torch.utils.data import TensorDataset
 from torch.utils.data import DataLoader
 import torch
-from data_util.config import config
 
 
 class InputFeatures(object):
@@ -17,7 +16,7 @@ class InputFeatures(object):
         self.feature = feature_list
 
 
-def read_corpus(path, max_length, intent2idx, slot2idx, vocab, is_train=True):
+def read_corpus(path, max_length, intent2idx, slot2idx, vocab, config, is_train=True):
     """
 
     :param path: 数据地址
@@ -92,13 +91,13 @@ def read_corpus(path, max_length, intent2idx, slot2idx, vocab, is_train=True):
             char_lists.append(char_list)
             query_list = []
             token_list, slot_list,slot_out= [], [],[]
-    data_loader = toTensor(token_lists,char_lists, slot_lists,intent_lists, mask_lists,is_train=is_train)
+    data_loader = toTensor(token_lists,char_lists, slot_lists,intent_lists, mask_lists, config, is_train=is_train)
     print("超过最大长度的样本数量为：",over_length)
     print(max_len_word)
     return data_loader
 
 
-def toTensor(token_lists, char_lists, slot_lists,intent_lists, mask_lists,is_train=True):
+def toTensor(token_lists, char_lists, slot_lists,intent_lists, mask_lists, config, is_train=True):
 
     dataset = TensorDataset(torch.LongTensor(token_lists),torch.LongTensor(char_lists),torch.LongTensor(slot_lists),torch.LongTensor(intent_lists),torch.LongTensor(mask_lists))
     if is_train:

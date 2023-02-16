@@ -3,6 +3,7 @@ import os
 import random
 import wandb
 import warnings
+import yaml
 
 from tqdm import trange
 
@@ -12,30 +13,19 @@ from data_util.noise import make_noise
 from model.Radam import RAdam
 from model.joint_model_trans import Joint_model
 
-wandb.init(project="robust-slu")
-
-config.parse_cli()
-config.dump()
-wandb.config.update(config.__dict__)
-
 warnings.filterwarnings('ignore')
-if config.use_gpu and torch.cuda.is_available():
-    device = torch.device("cuda", torch.cuda.current_device())
-    use_cuda = True
-else:
-    device = torch.device("cpu")
-    use_cuda = False
+assert torch.cuda.is_available()
+device = torch.device("cuda", torch.cuda.current_device())
 
 
-def set_seed():
-    random.seed(config.seed)
-    np.random.seed(config.seed)
-    torch.manual_seed(config.seed)
-    if not config.use_gpu and torch.cuda.is_available():
-        torch.cuda.manual_seed_all(config.seed)
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 
-def dev(model, dev_loader, idx2slot):
+def dev(model, dev_loader, idx2slot, config):
     model.eval()
     eval_loss_intent = 0
     eval_loss_slot = 0
@@ -45,9 +35,8 @@ def dev(model, dev_loader, idx2slot):
     true_slots = []
     for i, batch in enumerate(tqdm(dev_loader, desc="Evaluating")):
         inputs, char_lists, slot_labels, intent_labels, masks, = batch
-        if use_cuda:
-            inputs, char_lists, masks, intent_labels, slot_labels = \
-                inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
+        inputs, char_lists, masks, intent_labels, slot_labels = \
+            inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
         logits_intent, logits_slot = model.forward_logit((inputs, char_lists), masks)
         loss_intent, loss_slot = model.loss1(logits_intent, logits_slot, intent_labels, slot_labels, masks)
 
@@ -77,17 +66,16 @@ def dev(model, dev_loader, idx2slot):
     ave_loss_slot = eval_loss_slot * config.batch_size / data_nums
 
     sent_acc = semantic_acc(pred_slots, true_slots, pred_intents, true_intents)
-    print('\nEvaluation - intent_loss: {:.6f} slot_loss: {:.6f} acc: {:.4f}% '
-          'slot f1: {:.4f} sent acc: {:.4f} \n'.format(ave_loss_intent, ave_loss_slot,
-                                                       intent_acc, slot_f1, sent_acc))
+    tqdm.write(f"Evaluation - intent_loss: {ave_loss_intent} slot_loss: {ave_loss_slot} "
+               f"acc: {intent_acc} slot f1: {slot_f1} sent acc: {sent_acc}")
     model.train()
 
     return intent_acc, slot_f1, sent_acc
 
 
-def run_train(train_data_file, dev_data_file):
+def run_train(train_data_file, dev_data_file, config):
     print("1. load config and dict")
-    vocab_file = open(config.data_path + "vocab.txt", "r", encoding="utf-8")
+    vocab_file = open(config.vocab_path, "r", encoding="utf-8")
     vocab_list = [word.strip() for word in vocab_file]
     if not os.path.exists(config.data_path + "emb_word.txt"):
         emb_file = "D:/emb/glove.6B/glove.6B.300d.txt"
@@ -109,31 +97,29 @@ def run_train(train_data_file, dev_data_file):
     train_dir = os.path.join(config.data_path, train_data_file)
     dev_dir = os.path.join(config.data_path, dev_data_file)
     train_loader = read_corpus(train_dir, max_length=config.max_len, intent2idx=intent2idx, slot2idx=slot2idx,
-                               vocab=vocab, is_train=True)
+                               vocab=vocab, config=config, is_train=True)
     dev_loader = read_corpus(dev_dir, max_length=config.max_len, intent2idx=intent2idx, slot2idx=slot2idx,
-                             vocab=vocab, is_train=False)
+                             vocab=vocab, config=config, is_train=False)
     model = Joint_model(config, config.hidden_dim, config.batch_size, config.max_len, n_intent_class, n_slot_tag,
                         embedding_word)
 
-    if use_cuda:
-        model.cuda()
+    model.cuda()
     model.train()
     optimizer = RAdam(model.parameters(), lr=config.lr, weight_decay=0.000001)
     best_slot_f1 = [0.0, 0.0, 0.0]
     best_intent_acc = [0.0, 0.0, 0.0]
     best_sent_acc = [0.0, 0.0, 0.0]
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, [40, 70], gamma=config.lr_scheduler_gama, last_epoch=-1)
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, [40, 70], gamma=config.lr_scheduler_gamma,
+                                                     last_epoch=-1)
 
     for epoch in trange(config.epoch, desc="Epoch"):
-        print(scheduler.get_lr())
         step = 0
         for i, batch in enumerate(tqdm(train_loader, desc="batch_nums")):
             step += 1
             model.zero_grad()
             inputs, char_lists, slot_labels, intent_labels, masks, = batch
-            if use_cuda:
-                inputs, char_lists, masks, intent_labels, slot_labels = \
-                    inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
+            inputs, char_lists, masks, intent_labels, slot_labels = \
+                inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
             logits_intent, logits_slot = model.forward_logit((inputs, char_lists), masks)
             loss_intent, loss_slot, = model.loss1(logits_intent, logits_slot, intent_labels, slot_labels, masks)
 
@@ -144,11 +130,7 @@ def run_train(train_data_file, dev_data_file):
             loss.backward()
             optimizer.step()
 
-            if step % 100 == 0:
-                print("loss domain:", loss.item())
-                print('epoch: {}|    step: {} |    loss: {}'.format(epoch, step, loss.item()))
-
-        intent_acc, slot_f1, sent_acc = dev(model, dev_loader, idx2slot)
+        intent_acc, slot_f1, sent_acc = dev(model, dev_loader, idx2slot, config)
         wandb.log({'dev intent_acc': intent_acc, 'dev slot_f1': slot_f1, 'dev sent_acc': sent_acc})
 
         if slot_f1 > best_slot_f1[1]:
@@ -166,7 +148,7 @@ def run_train(train_data_file, dev_data_file):
     print("best_sent_acc:", best_sent_acc)
 
 
-def run_test(test_data_file):
+def run_test(test_data_file, config):
     # load dict
     idx2intent, intent2idx = lord_label_dict(config.data_path + "intent_label.txt")
     idx2slot, slot2idx = lord_label_dict(config.data_path + "slot_label.txt")
@@ -177,7 +159,7 @@ def run_test(test_data_file):
 
     test_dir = os.path.join(config.data_path, test_data_file)
     test_loader = read_corpus(test_dir, max_length=config.max_len, intent2idx=intent2idx, slot2idx=slot2idx,
-                              vocab=vocab, is_train=False)
+                              vocab=vocab, config=config, is_train=False)
     model = torch.load(config.model_save_dir + config.model_path, map_location=device)
     model.eval()
     pred_intents = []
@@ -187,8 +169,7 @@ def run_test(test_data_file):
 
     for i, batch in enumerate(tqdm(test_loader, desc="Evaluating")):
         inputs, char_lists, slot_labels, intent_labels, masks, = batch
-        if use_cuda:
-            inputs, char_lists, masks, intent_labels, slot_labels = inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
+        inputs, char_lists, masks, intent_labels, slot_labels = inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
         logits_intent, logits_slot = model.forward_logit((inputs, char_lists), masks)
         pred_intent, pred_slot = model.pred_intent_slot(logits_intent, logits_slot, masks)
         pred_intents.extend(pred_intent.cpu().numpy().tolist())
@@ -210,21 +191,51 @@ def run_test(test_data_file):
     print(Metrics_intent.classification_report)
     intent_acc = Metrics_intent.accuracy
     sent_acc = semantic_acc(pred_slots, true_slots, pred_intents, true_intents)
-    print('\nEvaluation -  acc: {:.4f}% ' 'slot f1: {:.4f} sent_acc: {:.4f}  \n'.format(intent_acc, slot_f1, sent_acc))
+    tqdm.write(f"Evaluation -  acc: {intent_acc} ' 'slot f1: {slot_f1} sent_acc: {sent_acc}")
     wandb.log({'test intent_acc': intent_acc, 'test slot_f1': slot_f1, 'test sent_acc': sent_acc})
 
     return sent_acc
 
 
-if __name__ == "__main__":
+def sweep():
+    with open("sweep-config.yaml") as f:
+        sweep_config = yaml.load(f, yaml.CLoader)
+    sweep_id = wandb.sweep(project="robust-slu", sweep=sweep_config)
+    wandb.agent(sweep_id, function=main)
+
+
+def main():
+    wandb.init(project="robust-slu", config="config-defaults.yaml")
+    wandb.run.name += "__by-sweep"
+
+    assert type(wandb.config.user_mean) == list and type(wandb.config.user_std) == list
+    assert len(wandb.config.user_mean) == len(wandb.config.user_std), "Length of `user_mean` != `user_std`"
+    user_count = len(wandb.config.user_mean)
+    user_noise_p = [random.gauss(mean, std) for mean, std in zip(wandb.config.user_mean, wandb.config.user_std)]
+    if "atis" in wandb.config.data_path:
+        n_class = 26  # ATIS
+    else:
+        raise ValueError
+    wandb.config.update({
+        "user_count": user_count,
+        "user_noise_p": user_noise_p,
+        "n_class": n_class,
+    })
+    config = wandb.config
+
     train_file = "train.txt"
     dev_file = "dev.txt"
     test_file = "test.txt"
 
-    set_seed()
-    make_noise()
+    set_seed(config.seed)
+    make_noise(config)
 
     # train model
-    run_train(train_file, dev_file)
+    run_train(train_file, dev_file, config)
     # test model
-    run_test(test_file)
+    run_test(test_file, config)
+
+
+if __name__ == "__main__":
+    sweep()
+    # main()  # 不用 sweep，单跑一次

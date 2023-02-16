@@ -3,14 +3,68 @@ import torch
 import math
 import torch.nn as nn
 import torch.nn.functional as F
-import model.loss
+from model.loss import *
 from model.torch_crf import CRF
 from layers.dynamic_rnn import DynamicLSTM
-from data_util.config import config
+
+
+def get_loss_fn(loss_type: set, n_class: int, alpha: float, beta: float, scale: float, q: float):
+    if loss_type == {"ce"}:
+        return torch.nn.CrossEntropyLoss()
+    elif loss_type == {"nce"}:
+        return NormalizedCrossEntropy(n_class, scale)
+    elif loss_type == {"sce"}:
+        return SCELoss(alpha, beta, n_class)
+    elif loss_type == {"rce"}:
+        return ReverseCrossEntropy(n_class, scale)
+    elif loss_type == {"nrce"}:
+        return NormalizedReverseCrossEntropy(n_class, scale)
+    elif loss_type == {"gce"}:
+        return GeneralizedCrossEntropy(n_class, q)
+    elif loss_type == {"ngce"}:
+        return NormalizedGeneralizedCrossEntropy(n_class, scale, q)
+    elif loss_type == {"mae"}:
+        return MeanAbsoluteError(n_class, scale)
+    elif loss_type == {"nmae"}:
+        return NormalizedMeanAbsoluteError(n_class, scale)
+    elif loss_type == {"nlnl"}:
+        raise NotImplementedError
+    elif loss_type == {"fl"}:
+        raise NotImplementedError
+    elif loss_type == {"nfl"}:
+        raise NotImplementedError
+    elif loss_type == {"dmi"}:
+        raise NotImplementedError
+    elif loss_type == {"nce", "rce"}:
+        return NCEandRCE(alpha, beta, n_class)
+    elif loss_type == {"nce", "mae"}:
+        return NCEandMAE(alpha, beta, n_class)
+    elif loss_type == {"gce", "nce"}:
+        return GCEandNCE(alpha, beta, n_class, q)
+    elif loss_type == {"gce", "rce"}:
+        return GCEandRCE(alpha, beta, n_class, q)
+    elif loss_type == {"gce", "mae"}:
+        return GCEandMAE(alpha, beta, n_class, q)
+    elif loss_type == {"ngce", "nce"}:
+        return NGCEandNCE(alpha, beta, n_class, q)
+    elif loss_type == {"ngce", "rce"}:
+        return NGCEandRCE(alpha, beta, n_class, q)
+    elif loss_type == {"ngce", "mae"}:
+        return NGCEandMAE(alpha, beta, n_class, q)
+    elif loss_type == {"mae", "rce"}:
+        return MAEandRCE(alpha, beta, n_class)
+    elif loss_type == {"nfl", "nce"}:
+        raise NotImplementedError
+    elif loss_type == {"nfl", "rce"}:
+        raise NotImplementedError
+    elif loss_type == {"nfl", "mae"}:
+        raise NotImplementedError
+    else:
+        raise ValueError
 
 
 class Joint_model(nn.Module):
-    def __init__(self, _, hidden_dim, batch_size, max_length, n_class, n_tag, embedding_matrix):
+    def __init__(self, config, hidden_dim, batch_size, max_length, n_class, n_tag, embedding_matrix):
         super(Joint_model, self).__init__()
         self.hidden_dim = hidden_dim
         self.batch_size = batch_size
@@ -26,15 +80,11 @@ class Joint_model(nn.Module):
         self.intent_fc = nn.Linear(self.hidden_dim, self.n_class)
         self.slot_fc = nn.Linear(self.hidden_dim, self.n_tag)
         self.I_S_Emb = Label_Attention(self.intent_fc, self.slot_fc)
-        self.T_block1 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
-        self.T_block2 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
-        self.T_block3 = I_S_Block(self.intent_fc, self.slot_fc, self.hidden_dim)
+        self.T_block1 = I_S_Block(config, self.intent_fc, self.slot_fc, self.hidden_dim)
+        self.T_block2 = I_S_Block(config, self.intent_fc, self.slot_fc, self.hidden_dim)
+        self.T_block3 = I_S_Block(config, self.intent_fc, self.slot_fc, self.hidden_dim)
         self.crflayer = CRF(self.n_tag)
-        self.criterion = config.loss_fn
-        # self.criterion = model.loss.SCELoss(alpha=0.1, beta=1.0, num_classes=n_class)
-        # self.criterion = model.loss.NCEandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
-        # self.criterion = model.loss.NCEandMAE(alpha=1.0, beta=1.0, num_classes=n_class)
-        # self.criterion = model.loss.NFLandRCE(alpha=1.0, beta=1.0, num_classes=n_class)
+        self.criterion = get_loss_fn(set(config.loss), n_class, config.alpha, config.beta, config.scale, config.q)
 
     def forward_logit(self, x, mask):
         x, x_char = x
@@ -104,7 +154,7 @@ class SelfOutput(nn.Module):
 
 
 class Intermediate(nn.Module):
-    def __init__(self, intermediate_size, hidden_size):
+    def __init__(self, config, intermediate_size, hidden_size):
         super(Intermediate, self).__init__()
         self.dense_in = nn.Linear(hidden_size, intermediate_size)
         self.intermediate_act_fn = nn.ReLU()
@@ -122,7 +172,7 @@ class Intermediate(nn.Module):
 
 
 class Intermediate_I_S(nn.Module):
-    def __init__(self, intermediate_size, hidden_size):
+    def __init__(self, config, intermediate_size, hidden_size):
         super(Intermediate_I_S, self).__init__()
         self.dense_in = nn.Linear(hidden_size * 6, intermediate_size)
         self.intermediate_act_fn = nn.ReLU()
@@ -135,8 +185,7 @@ class Intermediate_I_S(nn.Module):
         hidden_states_in = torch.cat([hidden_states_I, hidden_states_S], dim=2)
         batch_size, max_length, hidden_size = hidden_states_in.size()
         h_pad = torch.zeros(batch_size, 1, hidden_size)
-        if config.use_gpu and torch.cuda.is_available():
-            h_pad = h_pad.cuda()
+        h_pad = h_pad.cuda()
         h_left = torch.cat([h_pad, hidden_states_in[:, :max_length - 1, :]], dim=1)
         h_right = torch.cat([hidden_states_in[:, 1:, :], h_pad], dim=1)
         hidden_states_in = torch.cat([hidden_states_in, h_left, h_right], dim=2)
@@ -151,12 +200,12 @@ class Intermediate_I_S(nn.Module):
 
 
 class I_S_Block(nn.Module):
-    def __init__(self, intent_emb, slot_emb, hidden_size):
+    def __init__(self, config, intent_emb, slot_emb, hidden_size):
         super(I_S_Block, self).__init__()
-        self.I_S_Attention = I_S_SelfAttention(hidden_size, 2 * hidden_size, hidden_size)
+        self.I_S_Attention = I_S_SelfAttention(config, hidden_size, 2 * hidden_size, hidden_size)
         self.I_Out = SelfOutput(hidden_size, config.attention_dropout)
         self.S_Out = SelfOutput(hidden_size, config.attention_dropout)
-        self.I_S_Feed_forward = Intermediate_I_S(hidden_size, hidden_size)
+        self.I_S_Feed_forward = Intermediate_I_S(config, hidden_size, hidden_size)
 
     def forward(self, H_intent_input, H_slot_input, mask):
         H_slot, H_intent = self.I_S_Attention(H_intent_input, H_slot_input, mask)
@@ -186,7 +235,7 @@ class Label_Attention(nn.Module):
 
 
 class I_S_SelfAttention(nn.Module):
-    def __init__(self, input_size, hidden_size, out_size):
+    def __init__(self, config, input_size, hidden_size, out_size):
         super(I_S_SelfAttention, self).__init__()
 
         self.num_attention_heads = 8

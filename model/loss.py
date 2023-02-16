@@ -2,14 +2,8 @@ import torch
 import numpy as np
 import torch.nn.functional as F
 
-if torch.cuda.is_available():
-    torch.backends.cudnn.benchmark = True
-    if torch.cuda.device_count() > 1:
-        device = torch.device('cuda:0')
-    else:
-        device = torch.device('cuda')
-else:
-    device = torch.device('cpu')
+assert torch.cuda.is_available()
+device = torch.device("cuda", torch.cuda.current_device())
 
 
 class SCELoss(torch.nn.Module):
