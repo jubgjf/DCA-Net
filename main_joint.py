@@ -5,7 +5,7 @@ import wandb
 import warnings
 import yaml
 
-from tqdm import trange
+from tqdm.auto import trange, tqdm
 
 from data_util.Metrics import IntentMetrics, SlotMetrics, semantic_acc
 from data_util.data_process import *
@@ -33,11 +33,10 @@ def dev(model, dev_loader, idx2slot, config):
     true_intents = []
     pred_slots = []
     true_slots = []
-    for i, batch in enumerate(tqdm(dev_loader, desc="Evaluating")):
-        inputs, char_lists, slot_labels, intent_labels, masks, = batch
-        inputs, char_lists, masks, intent_labels, slot_labels = \
-            inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
-        logits_intent, logits_slot = model.forward_logit((inputs, char_lists), masks)
+    for batch in tqdm(dev_loader, desc="Evaluating"):
+        inputs, slot_labels, intent_labels, masks, = batch
+        inputs, masks, intent_labels, slot_labels = inputs.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
+        logits_intent, logits_slot = model.forward_logit(inputs, masks)
         loss_intent, loss_slot = model.loss1(logits_intent, logits_slot, intent_labels, slot_labels, masks)
 
         pred_intent, pred_slot = model.pred_intent_slot(logits_intent, logits_slot, masks)
@@ -74,19 +73,8 @@ def dev(model, dev_loader, idx2slot, config):
 
 
 def run_train(train_data_file, dev_data_file, config):
-    print("1. load config and dict")
-    vocab_file = open(config.vocab_path, "r", encoding="utf-8")
-    vocab_list = [word.strip() for word in vocab_file]
-    if not os.path.exists(config.data_path + "emb_word.txt"):
-        emb_file = "D:/emb/glove.6B/glove.6B.300d.txt"
-        embeddings = read_emb(emb_file, vocab_list)
-        emb_write = open(config.data_path + "/emb_word.txt", "w", encoding="utf-8")
-        for emb in embeddings:
-            emb_write.write(emb)
-        emb_write.close()
-    else:
-        embedding_file = open(config.data_path + "emb_word.txt", "r", encoding="utf-8")
-        embeddings = [emb.strip() for emb in embedding_file]
+    embedding_file = open(config.data_path + "emb_word.txt", "r", encoding="utf-8")
+    embeddings = [emb.strip() for emb in embedding_file]
     embedding_word, vocab = process_emb(embeddings, emb_dim=config.emb_dim)
 
     idx2intent, intent2idx = lord_label_dict(config.data_path + "intent_label.txt")
@@ -113,14 +101,11 @@ def run_train(train_data_file, dev_data_file, config):
                                                      last_epoch=-1)
 
     for epoch in trange(config.epoch, desc="Epoch"):
-        step = 0
-        for i, batch in enumerate(tqdm(train_loader, desc="batch_nums")):
-            step += 1
+        for batch in tqdm(train_loader, desc="batch_nums"):
             model.zero_grad()
-            inputs, char_lists, slot_labels, intent_labels, masks, = batch
-            inputs, char_lists, masks, intent_labels, slot_labels = \
-                inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
-            logits_intent, logits_slot = model.forward_logit((inputs, char_lists), masks)
+            inputs, slot_labels, intent_labels, masks, = batch
+            inputs, masks, intent_labels, slot_labels = inputs.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
+            logits_intent, logits_slot = model.forward_logit(inputs, masks)
             loss_intent, loss_slot, = model.loss1(logits_intent, logits_slot, intent_labels, slot_labels, masks)
 
             if epoch < 40:
@@ -167,10 +152,10 @@ def run_test(test_data_file, config):
     pred_slots = []
     true_slots = []
 
-    for i, batch in enumerate(tqdm(test_loader, desc="Evaluating")):
-        inputs, char_lists, slot_labels, intent_labels, masks, = batch
-        inputs, char_lists, masks, intent_labels, slot_labels = inputs.cuda(), char_lists.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
-        logits_intent, logits_slot = model.forward_logit((inputs, char_lists), masks)
+    for batch in tqdm(test_loader, desc="Evaluating"):
+        inputs, slot_labels, intent_labels, masks, = batch
+        inputs, masks, intent_labels, slot_labels = inputs.cuda(), masks.cuda(), intent_labels.cuda(), slot_labels.cuda()
+        logits_intent, logits_slot = model.forward_logit(inputs, masks)
         pred_intent, pred_slot = model.pred_intent_slot(logits_intent, logits_slot, masks)
         pred_intents.extend(pred_intent.cpu().numpy().tolist())
         true_intents.extend(intent_labels.cpu().numpy().tolist())

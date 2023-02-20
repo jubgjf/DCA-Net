@@ -1,11 +1,9 @@
 # coding:utf-8
-import torch
 import math
 import torch.nn as nn
-import torch.nn.functional as F
-from model.loss import *
-from model.torch_crf import CRF
-from layers.dynamic_rnn import DynamicLSTM
+from .loss import *
+from .torch_crf import CRF
+from .dynamic_rnn import DynamicLSTM
 
 
 def get_loss_fn(loss_type: set, n_class: int, alpha: float, beta: float, scale: float, q: float):
@@ -87,7 +85,6 @@ class Joint_model(nn.Module):
         self.criterion = get_loss_fn(set(config.loss), n_class, config.alpha, config.beta, config.scale, config.q)
 
     def forward_logit(self, x, mask):
-        x, x_char = x
         x_len = torch.sum(x != 0, dim=-1)
         x_emb = self.emb_drop(self.embed(x))
 
