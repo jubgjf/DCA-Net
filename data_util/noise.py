@@ -12,7 +12,7 @@ def make_noise(config):
         labels = [line.strip().split('\t')[1] for line in labels_raw]
 
     # Read training dataset
-    with open(f'{config.data_path}/train_clean.txt') as f:
+    with open(f'{config.data_path}/train.txt') as f:
         data_raw = f.readlines()
         data = [d.strip() for d in data_raw]
         lens = len(data)
@@ -32,6 +32,6 @@ def make_noise(config):
 
     # train     -> noisy
     # dev, test -> clean
-    with open(f'{config.data_path}/train.txt', 'w') as f:
+    with open(f'{config.data_path}/train-noisy.txt', 'w') as f:
         noisy_data = [d + '\n' for d in data]
         f.writelines(noisy_data)

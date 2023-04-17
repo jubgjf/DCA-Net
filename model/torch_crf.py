@@ -21,7 +21,7 @@ class CRF(nn.Module):
     Attributes
     ----------
     num_tags : int
-        Number of tags passed to ``__init__``.
+        Number of tags passed to ``__init__.py``.
     start_transitions : :class:`~torch.nn.Parameter`
         Start transition score tensor of size ``(num_tags,)``.
     end_transitions : :class:`~torch.nn.Parameter`
