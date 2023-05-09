@@ -25,7 +25,7 @@ lr_scheduler_gamma:
 batch_size:
   value: 32
 epoch:
-  value: 100
+  value: 200
 seed:
   value: 9
 lr:

@@ -32,7 +32,7 @@ parameters:
   batch_size:
     value: 32
   epoch:
-    value: 100
+    value: 200
   seed:
     value: 9
   lr:
@@ -40,8 +40,30 @@ parameters:
   eps:
     value: 1e-12
   user_mean:
-    values: [ [ 0 ], [ 0.2, 0.2, 0.2 ], [ 0.5, 0.5, 0.5 ], [ 0.8, 0.8, 0.8 ], [ 0.2, 0.5, 0.8 ] ]
+    values: [ [ 0 ], [ 0.2, 0.2, 0.2 ], [ 0.4, 0.4, 0.4 ], [ 0.6, 0.6, 0.6 ], [ 0.8, 0.8, 0.8 ] ]
   user_std:
     values: [ [ 0 ], [ 0.2, 0.2, 0.2 ] ]
   loss:
     values: [ [ "ce" ], [ "gce" ], [ "sce" ], [ "nce", "rce" ], [ "nce", "mae" ], [ "gce", "rce" ], [ "gce", "mae" ], [ "ngce", "rce" ], [ "ngce", "mae" ] ]
+  alpha:
+    value: 1.0
+  beta:
+    value: 1.0
+  scale:
+    value: 1.0
+  q:
+    value: 0.7
+  warmup_epoch:
+    value: 2
+  gmm_max_iter:
+    value: 10
+  gmm_tol:
+    value: 1.0e-2
+  gmm_reg_covar:
+    value: 5.0e-4
+  temp:
+    value: 0.5
+  b:
+    value: 0.75
+  metric: # Choose from: gmm, user
+    value: [ "gmm" ]

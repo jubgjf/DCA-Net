@@ -124,8 +124,8 @@ def run_train(train_data_file, dev_data_file, config):
     dev_dir = os.path.join(config.data_path, dev_data_file)
     train_dataset = MyDataset(train_dir, config.max_len, intent2idx, slot2idx, vocab)
     dev_dataset = MyDataset(dev_dir, config.max_len, intent2idx, slot2idx, vocab)
-    train_loader = DataLoader(train_dataset, shuffle=True, batch_size=config.batch_size)
-    dev_loader = DataLoader(dev_dataset, shuffle=False, batch_size=config.batch_size)
+    train_loader = DataLoader(train_dataset, shuffle=True, batch_size=config.batch_size, drop_last=True)
+    dev_loader = DataLoader(dev_dataset, shuffle=False, batch_size=config.batch_size, drop_last=True)
     print("Load model from warmup")
     model = torch.load(config.model_save_dir + config.model_path, map_location=device)  # load from warmup
 
@@ -308,8 +308,8 @@ def run_test(test_data_file, config):
 
 
 if __name__ == "__main__":
-    wandb.init(project="robust-slu-selfmix", config="config.yaml")
-    wandb.run.name += "__mixup"
+    # wandb.init(project="robust-slu-small", config="config.yaml", mode="disabled")
+    wandb.init(project="robust-slu-small")
 
     assert type(wandb.config.user_mean) == list and type(wandb.config.user_std) == list
     assert len(wandb.config.user_mean) == len(wandb.config.user_std), "Length of `user_mean` != `user_std`"
