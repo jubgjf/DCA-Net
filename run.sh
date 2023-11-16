@@ -1,16 +1,15 @@
 #!/bin/zsh
 
-#SBATCH --mail-user=guanjiannan@outlook.com
-#SBATCH --mail-type=END
 #SBATCH -J DCA-Net
 #SBATCH -o slurm_logs/slurm-%j.out
 #SBATCH -e slurm_logs/slurm-%j.err
 #SBATCH -p compute
 #SBATCH -N 1
 #SBATCH -t 96:00:00
-#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
+#SBATCH --gres=gpu:geforce_rtx_2080_ti:1
+#SBATCH -w gpu17
 
-source ~/.local/bin/miniconda3/etc/profile.d/conda.sh
+source ~/.miniconda/etc/profile.d/conda.sh
 conda activate hpc
 
-python main_joint.py
+wandb agent jubgjf/robust-slu-small/9noxdd7x

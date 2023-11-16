@@ -309,7 +309,7 @@ def run_test(test_data_file, config):
 
 if __name__ == "__main__":
     # wandb.init(project="robust-slu-small", config="config.yaml", mode="disabled")
-    wandb.init(project="robust-slu-small")
+    wandb.init(project="robust-slu-small", config="config.yaml")
 
     assert type(wandb.config.user_mean) == list and type(wandb.config.user_std) == list
     assert len(wandb.config.user_mean) == len(wandb.config.user_std), "Length of `user_mean` != `user_std`"
